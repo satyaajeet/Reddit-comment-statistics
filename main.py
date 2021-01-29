@@ -1,5 +1,5 @@
 #Inspired by u/Krukerfluk on Reddit
-
+#Feel free to edit/use my code!
 import praw
 import time
 reddit = praw.Reddit(
@@ -56,7 +56,7 @@ The 3 top comments are from:
 
 This idea was inspired by u/Krukerfluk
 Krukerfluk's post: https://www.reddit.com/r/Python/comments/hoolsm/this_post_has/
-My code on Github: """
+My code on Github: https://github.com/Jonathan357611/Reddit-comment-statistics"""
 
     submission.edit(new_body)
     time.sleep(20)
