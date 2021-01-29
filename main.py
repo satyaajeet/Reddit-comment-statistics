@@ -2,15 +2,26 @@
 #Feel free to edit/use my code!
 import praw
 import time
+import datetime
 reddit = praw.Reddit(
-    client_id='your client id',
-    client_secret='your client secret',
-    username='jonathan_fortmann',
-    password='your password',
-    user_agent='your user agent')
-
+    client_id='******',
+    client_secret='******',
+    username='******',
+    password='******',
+    user_agent='******')
+try:
+    with open("total_updates.txt", "x") as f:
+        pass
+    with open("total_updates.txt", "w") as f:
+        f.write("0")
+except:
+    pass
 while True:
-    submission = reddit.submission(id='id from post')
+    with open("total_updates.txt", "r") as f:
+        update_number = f.read()
+    now = datetime.datetime.now()
+    current_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    submission = reddit.submission(id='****')
     ratio = submission.upvote_ratio
     upvote = round((ratio * submission.score) / (2 * ratio - 1)) if ratio != 0.5 else round(submission.score / 2)
     try:
@@ -33,8 +44,6 @@ while True:
         top_comment3 = "Theres no place 3!"
     downvote = upvote - submission.score
     comments = str(submission.num_comments)
-
-
     new_body = f"""
 Hello! I made a little Program
 which gets statistics about this post!
@@ -54,9 +63,17 @@ The 3 top comments are from:
 3. {top_comment3}
 
 
+Last update: {current_time} CET
+
+total updates: {str(int(update_number) + int(1))}
+
 This idea was inspired by u/Krukerfluk
 Krukerfluk's post: https://www.reddit.com/r/Python/comments/hoolsm/this_post_has/
-My code on Github: https://github.com/Jonathan357611/Reddit-comment-statistics"""
 
+My code on Github: https://github.com/Jonathan357611/Reddit-comment-statistics
+
+This program is hosted on a Raspberry pi zero!"""
     submission.edit(new_body)
+    with open("total_updates.txt", "w") as f:
+        f.write(str(int(update_number) + int(1)))
     time.sleep(20)
